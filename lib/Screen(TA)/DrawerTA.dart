@@ -244,26 +244,6 @@ class _CustomDrawerTAState extends State<CustomDrawerTA> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         color: Color.fromRGBO(237, 242, 242, 0.783)),
-                    child: CustomListTile(
-                      icon: Icons.call_to_action_sharp,
-                      title: "Make Attendance",
-                      onTap: () async {
-                        // Navigator.pushAndRemoveUntil(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => MakeAttendance()),
-                        //   (Route<dynamic> route) => false,
-                        // );
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Stu_All_CourseScreen(),
-                          ),
-                        ).then((_) async {
-                          Navigator.pop(context);
-                        });
-                        // await navigateToScreen(context, MakeAttendance());
-                      },
-                    ),
                   ),
                   Container(
                     decoration: BoxDecoration(
@@ -274,34 +254,6 @@ class _CustomDrawerTAState extends State<CustomDrawerTA> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         color: Color.fromRGBO(237, 242, 242, 0.783)),
-                    child: CustomListTile(
-                      icon: Icons.list_alt_sharp,
-                      title: "Today TA Attendance",
-                      onTap: () async {
-                        // Navigator.push(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //             builder: (context) => FollowUp_Screen("")))
-                        //     .then((_) async {
-                        //   Navigator.pop(context);
-                        // });
-                        // Navigator.pushAndRemoveUntil(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) => Attendance_History()),
-                        //   (Route<dynamic> route) => false,
-                        // );
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Ta_All_CourseScreen(),
-                          ),
-                        ).then((_) async {
-                          Navigator.pop(context);
-                        });
-                        // await navigateToScreen(context, Attendance_History());
-                      },
-                    ),
                   ),
                   // Container(
                   //   decoration: BoxDecoration(

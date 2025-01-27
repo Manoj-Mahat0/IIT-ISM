@@ -253,26 +253,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         color: Color.fromRGBO(237, 242, 242, 0.783)),
-                    child: CustomListTile(
-                      icon: Icons.call_to_action_sharp,
-                      title: "Make Attendance",
-                      onTap: () async {
-                        // Navigator.pushAndRemoveUntil(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => MakeAttendance()),
-                        //   (Route<dynamic> route) => false,
-                        // );
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Stu_All_CourseScreen(),
-                          ),
-                        ).then((_) async {
-                          Navigator.pop(context);
-                        });
-                        // await navigateToScreen(context, MakeAttendance());
-                      },
-                    ),
                   ),
                   /* Container(
                     decoration: BoxDecoration(

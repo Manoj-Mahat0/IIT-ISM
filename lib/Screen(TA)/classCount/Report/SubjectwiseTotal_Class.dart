@@ -12,6 +12,8 @@ import 'package:ism/Screen(Professor)/Report/ReportDateList.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../../DrawerTA.dart';
+
 class Subject_Wise_ReportCount_TA extends StatefulWidget {
   @override
   _Subject_Wise_ReportCount_TAState createState() =>
@@ -273,7 +275,7 @@ class _Subject_Wise_ReportCount_TAState
         ),
         backgroundColor: ColorConstant.ismcolor,
       ),
-      drawer: CustomDrawerProfessor(),
+      drawer: CustomDrawerTA(),
       body: isLoading
           ? Center(
               child: CircularProgressIndicator(

@@ -634,13 +634,6 @@ class _Current_AttendanceScreenState extends State<Current_AttendanceScreen> {
         isNEP = preferences.getBool('isNEP') ?? false;
       });
 
-      // Conditionally set the URL based on isNEP value
-      // final Uri uri = isNEP
-      //     ? Uri.parse(
-      //         '${ApiConstants.baseUrl}nep_AbsentAttendanceUpdate') // If isNEP is true
-      //     : Uri.parse(
-      //         '${ApiConstants.baseUrl}AbsentAttendanceUpdate'); // If isNEP is false
-
       final Uri uri = isNEP
           ? Uri.parse(
               '${ApiConstants.baseUrl}nep_UpdateAttendanceStatus_for_allStudent') // If isNEP is true
@@ -660,14 +653,6 @@ class _Current_AttendanceScreenState extends State<Current_AttendanceScreen> {
         final Map<String, dynamic> body = {
           "admn_no": selectedStudentIds,
           "id": ListId.toString(),
-          // "sub_offered_id": widget.sub_offered_id,
-          // 'date': widget.date,
-          // "class_periods": classpriod,
-          // 'sub_id': widget.sub_id,
-          // 'auth_id': auth_id,
-          // 'pro_id': auth_id
-
-          // Assuming status is a field in StudentDataList
         };
 
         final response =
@@ -732,37 +717,29 @@ class _Current_AttendanceScreenState extends State<Current_AttendanceScreen> {
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       String? token = preferences.getString('token');
-      // String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
       bool isNEP = false;
 
       setState(() {
         isNEP = preferences.getBool('isNEP') ?? false;
       });
 
-      // Conditionally set the URL based on isNEP value
       final Uri uri = isNEP
           ? Uri.parse(
               '${ApiConstants.baseUrl}nep_CreateAttendanceList_update') // If isNEP is true
           : Uri.parse(
               '${ApiConstants.baseUrl}CreateAttendanceList_update'); // If isNEP is false
-
-      // final Uri uri =
-      //     Uri.parse('${ApiConstants.baseUrl}CreateAttendanceList_update');
-      final Map<String, String> headers = {
+     final Map<String, String> headers = {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',
       };
 
-      // for (var student in StudentList) {
       try {
         final Map<String, dynamic> body = {
           "session": widget.session,
           "sessionyear": widget.sessionyear,
           "sub_offered_id": widget.sub_offered_id,
           'date': widget.date,
-
-          // Assuming status is a field in StudentDataList
         };
 
         final response =
@@ -770,10 +747,8 @@ class _Current_AttendanceScreenState extends State<Current_AttendanceScreen> {
 
         if (response.statusCode == 200) {
           final jsonData = jsonDecode(response.body);
-          // if (jsonData['status'] == 'success') {
 
           if (jsonData['status'] == true) {
-            // Handle success scenario for this student
             print('Attendance record for  inserted successfully');
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -809,7 +784,6 @@ class _Current_AttendanceScreenState extends State<Current_AttendanceScreen> {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       String? token = preferences.getString('token');
       String? userid = preferences.getString('userids');
-      // String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
       String? remarkss;
       if (remark == '') {
         setState(() {
@@ -824,15 +798,12 @@ class _Current_AttendanceScreenState extends State<Current_AttendanceScreen> {
         isNEP = preferences.getBool('isNEP') ?? false;
       });
 
-      // Conditionally set the URL based on isNEP value
       final Uri uri = isNEP
           ? Uri.parse(
               '${ApiConstants.baseUrl}nep_UpdateAttendanceStatus') // If isNEP is true
           : Uri.parse(
               '${ApiConstants.baseUrl}UpdateAttendanceStatus'); // If isNEP is false
 
-      // final Uri uri =
-      //     Uri.parse('${ApiConstants.baseUrl}UpdateAttendanceStatus');
       final Map<String, String> headers = {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
@@ -884,22 +855,10 @@ class _Current_AttendanceScreenState extends State<Current_AttendanceScreen> {
     }
   }
 
-  // void _updateAttendanceStatus(int index, String status) {
-  //   setState(() {
-  //     AllStudentList[index].status == status;
-  //     int originalIndex = AbsentStudentList.indexWhere(
-  //         (student) => student == AllStudentList[index].admnNo);
-  //     if (originalIndex != -1) {
-  //       AbsentStudentList[originalIndex].status = AllStudentList[index].status;
-  //       // AbsentStudentList.add(AbsentStudentList[originalIndex].status);
-  //     }
-  //     // _filteredStudents = _students.where((student) => (widget.isPresent && student['status'] == 'Present') || (!widget.isPresent && student['status'] == 'Absent')).toList();
-  //   });
-  // }
-
   int _currentIndex = 0;
   bool isallselected = false;
   @override
+
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -907,125 +866,31 @@ class _Current_AttendanceScreenState extends State<Current_AttendanceScreen> {
           key: _scaffoldKey,
           drawer: CustomDrawerProfessor(),
           appBar: AppBar(
+            backgroundColor: ColorConstant.ismcolor,
             title: Row(
+              mainAxisAlignment: MainAxisAlignment.center, // Center the search bar
               children: [
                 Expanded(
-                  flex: 1,
-                  child: Text(
-                    totalStudent,
+                  child: TextField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      hintText: 'Search...',
+                      hintStyle: TextStyle(color: Colors.white70),
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                      filled: true,
+                      fillColor: Colors.white.withOpacity(0.1),
+                      contentPadding: EdgeInsets.symmetric(vertical: 10),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
                     style: TextStyle(color: Colors.white),
+                    onChanged: (value) {
+                      _onSearchChanged(); // Trigger search logic
+                    },
                   ),
                 ),
-                //     Expanded(
-                //         flex: 1,
-                //         // ignore: sort_child_properties_last
-                //         child: Row(children: [
-                //           Expanded(
-                //             flex: 8,
-                //             child: TextField(
-                //               controller: _searchController,
-                //               onChanged: (value) {
-                //                 setState(() {
-                //                   _search = value;
-                //                 });
-                //               },
-                //               cursorColor: Colors.white,
-                //               keyboardType: TextInputType.text,
-                //               textInputAction: TextInputAction.go,
-                //               decoration: InputDecoration(
-                //                 focusColor: Colors.white,
-                //                 border: InputBorder.none,
-                //                 contentPadding:
-                //                     EdgeInsets.symmetric(horizontal: 15),
-                //                 hintText: "Search",
-                //                 hintStyle: TextStyle(color: Colors.white),
-                //                 fillColor: Colors.white,
-                //                 iconColor: Colors.white,
-                //                 hoverColor: Colors.white,
-                //               ),
-                //               style: TextStyle(color: Colors.white),
-                //             ),
-                //           ),
-                //           Expanded(
-                //             flex: 5,
-                //             child: InkWell(
-                //               onTap: () async {
-                //                 setState(() {
-                //                   AbsentStudentList = <StudentAttendance>[];
-                //                 });
-                //                 _LoadAssignClass(_search.toString());
-                //               },
-                //               child: Container(
-                //                 padding: EdgeInsets.all(10.0),
-                //                 decoration: BoxDecoration(
-                //                   color: ColorConstant.ismcolor,
-                //                   borderRadius: BorderRadius.circular(5.0),
-                //                 ),
-                //                 child: Icon(
-                //                   Icons.search,
-                //                   size: 30,
-                //                   color: Colors.white,
-                //                 ),
-                //               ),
-                //             ),
-                //           )
-                //           /*   Expanded(
-                //       flex: 1,
-                //       child: Row(
-                //         children: [
-                //           Expanded(
-                //             flex: 8,
-                //             child: TextField(
-                //               onChanged: (value) {
-                //                 setState(() {
-                //                   _search = value;
-                //                 });
-                //               },
-                //               cursorColor: Colors.white,
-                //               keyboardType: TextInputType.text,
-                //               textInputAction: TextInputAction.go,
-                //               decoration: InputDecoration(
-                //                 focusColor: Colors.white,
-                //                 border: InputBorder.none,
-                //                 contentPadding:
-                //                     EdgeInsets.symmetric(horizontal: 15),
-                //                 hintText: "Search",
-                //                 hintStyle: TextStyle(color: Colors.white),
-                //                 fillColor: Colors.white,
-                //                 iconColor: Colors.white,
-                //                 hoverColor: Colors.white,
-                //               ),
-                //               style: TextStyle(color: Colors.white),
-                //             ),
-                //           ),
-                //           Expanded(
-                //             flex: 5,
-                //             child: InkWell(
-                //               onTap: () async {
-                //                 setState(() {
-                //                   AllStudentList = <StudentAttendance>[];
-                //                 });
-                //                 _LoadAssignClass(_search.toString());
-                //               },
-                //               child: Container(
-                //                 padding: EdgeInsets.all(10.0),
-                //                 decoration: BoxDecoration(
-                //                   color: ColorConstant.ismcolor,
-                //                   borderRadius: BorderRadius.circular(5.0),
-                //                 ),
-                //                 child: Icon(
-                //                   Icons.search,
-                //                   size: 30,
-                //                   color: Colors.white,
-                //                 ),
-                //               ),
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     )
-                //  */
-                //         ]))
               ],
             ),
             leading: InkWell(
@@ -1037,521 +902,297 @@ class _Current_AttendanceScreenState extends State<Current_AttendanceScreen> {
             actions: [
               isallselected
                   ? Row(
-                      children: [
-                        Text(
-                          "Select all",
-                          style: TextStyle(color: ColorConstant.whiteA700),
-                        ),
-                        IconButton(
-                          onPressed: _selectAll,
-                          icon: Icon(Icons.check_box_outline_blank,
-                              color: ColorConstant.whiteA700),
-                          tooltip: "Select All",
-                        ),
-                      ],
-                    )
-                  : Row(
-                      children: [
-                        Text(
-                          "Deselect all",
-                          style: TextStyle(color: ColorConstant.whiteA700),
-                        ),
-                        IconButton(
-                          onPressed: _deselectAll,
-                          icon: Icon(Icons.check_box,
-                              color: ColorConstant.whiteA700),
-                          tooltip: "Deselect All",
-                        ),
-                      ],
-                    ),
-            ],
-
-            // actions: [
-            //   Padding(
-            //     padding: const EdgeInsets.only(right: 12.0),
-            //     child: InkWell(
-            //       onTap: () {
-            //         _LoadAssignClass('');
-            //         setState(() {
-            //           pagerload = true;
-            //         });
-            //       },
-            //       child: Icon(
-            //         Icons.replay,
-            //         color: Colors.white,
-            //         size: 30,
-            //       ),
-            //     ),
-            //   ),
-            // ],
-            backgroundColor: ColorConstant.ismcolor,
-          ),
-          body: isLoading
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircularProgressIndicator(),
-                      Text('Please wait Data fetching...')
-                    ],
+                children: [
+                  Text(
+                    "Select all",
+                    style: TextStyle(color: ColorConstant.whiteA700),
                   ),
-                )
-              : Container(
-                  width: double.infinity,
-                  child: Column(
-                    children: [
-                      //button tab
-                      // Padding(
-                      //   padding: const EdgeInsets.only(left: 8.0, right: 8),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       ElevatedButton(
-                      //         onPressed: () {
-                      //           _LoadAssignClass(_search);
-                      //           setState(() {
-                      //             _currentIndex = 0;
-                      //           });
-                      //         },
-                      //         style: ElevatedButton.styleFrom(
-                      //           backgroundColor: _currentIndex == 0
-                      //               ? ColorConstant.ismcolor
-                      //               : Colors.grey,
-                      //         ),
-                      //         child: Text(
-                      //           'All',
-                      //           style: TextStyle(
-                      //             color: _currentIndex == 0
-                      //                 ? Colors.white
-                      //                 : Colors.black,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       ElevatedButton(
-                      //         onPressed: () {
-                      //           PresentStudent(_search);
-                      //           setState(() {
-                      //             _currentIndex = 1;
-                      //           });
-                      //         },
-                      //         style: ElevatedButton.styleFrom(
-                      //           backgroundColor: _currentIndex == 1
-                      //               ? ColorConstant.ismcolor
-                      //               : Colors.grey,
-                      //         ),
-                      //         child: Text(
-                      //           'Present',
-                      //           style: TextStyle(
-                      //             color: _currentIndex == 1
-                      //                 ? Colors.white
-                      //                 : Colors.black,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       ElevatedButton(
-                      //         onPressed: () {
-                      //           setState(() {
-                      //             AbsentStudent(_search);
-                      //             _currentIndex = 2;
-                      //           });
-                      //         },
-                      //         style: ElevatedButton.styleFrom(
-                      //           backgroundColor: _currentIndex == 2
-                      //               ? ColorConstant.ismcolor
-                      //               : Colors.grey,
-                      //         ),
-                      //         child: Text(
-                      //           'Absent',
-                      //           style: TextStyle(
-                      //             color: _currentIndex == 2
-                      //                 ? Colors.white
-                      //                 : Colors.black,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          height: 30,
-                          decoration: BoxDecoration(
-                            border: Border.all(),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Center(
-                                  child: Text(
-                                    "Present: $presentStudent",
-                                    // style: TextStyle(fontSize: 18),
-                                  ),
-                                ),
-                                Center(
-                                  child: Text(
-                                    "Absent: $absentStudent",
-                                    // style: TextStyle(fontSize: 18),
-                                  ),
-                                ),
-                              ],
+                  IconButton(
+                    onPressed: _selectAll,
+                    icon: Icon(Icons.check_box_outline_blank,
+                        color: ColorConstant.whiteA700),
+                    tooltip: "Select All",
+                  ),
+                ],
+              )
+                  : Row(
+                children: [
+                  Text(
+                    "Deselect all",
+                    style: TextStyle(color: ColorConstant.whiteA700),
+                  ),
+                  IconButton(
+                    onPressed: _deselectAll,
+                    icon: Icon(Icons.check_box,
+                        color: ColorConstant.whiteA700),
+                    tooltip: "Deselect All",
+                  ),
+                ],
+              ),
+            ],
+          ),
+          body: RefreshIndicator(
+            onRefresh: () async {
+              // Call your API to refresh the data
+              await _LoadAssignClass(''); // Replace this with your refresh logic
+            },
+            child: isLoading
+                ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  Text('Please wait Data fetching...')
+                ],
+              ),
+            )
+                : Container(
+              width: double.infinity,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 30,
+                      decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding:
+                        const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Center(
+                              child: Text(
+                                "Present: $presentStudent",
+                              ),
                             ),
-                          ),
+                            Center(
+                              child: Text(
+                                "Absent: $absentStudent",
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          height: 30,
-                          decoration: BoxDecoration(
-                            border: Border.all(),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Center(
-                                  child: Text(
-                                    "Attendance OTP: " + widget.otp.toString(),
-                                    // style: TextStyle(fontSize: 18),
-                                  ),
-                                ),
-                                Center(
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      AttendanceTimeExtand(context);
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: ColorConstant.ismcolor,
-                                    ),
-                                    child: Text(
-                                      'Extend Time',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 30,
+                      decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding:
+                        const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Center(
+                              child: Text(
+                                "Attendance OTP: " + widget.otp.toString(),
+                              ),
                             ),
-                          ),
+                            Center(
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  AttendanceTimeExtand(context);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: ColorConstant.ismcolor,
+                                ),
+                                child: Text(
+                                  'Extend Time',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: AllStudentList.length,
-                          itemBuilder: (context, index) {
-                            int id =
-                                index + 1; // Generates an ID starting from 1
-                            String length = AllStudentList[index].toString();
-                            return Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Container(
-                                height: 70,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: AllStudentList.length,
+                      itemBuilder: (context, index) {
+                        int id =
+                            index + 1; // Generates an ID starting from 1
+                        return Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Container(
+                            height: 70,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Flexible(
+                                  flex: 1,
+                                  child: Container(
+                                    height: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                      BorderRadiusDirectional.only(
+                                        topStart: Radius.circular(10),
+                                        bottomStart: Radius.circular(10),
+                                      ),
+                                      color: ColorConstant.ismcolor,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        id.toString(),
+                                        style: TextStyle(
+                                            color: ColorConstant.whiteA700),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Flexible(
-                                      flex: 1,
-                                      child: Container(
-                                        height: double.infinity,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadiusDirectional.only(
-                                            topStart: Radius.circular(10),
-                                            bottomStart: Radius.circular(10),
-                                          ),
-                                          color: ColorConstant.ismcolor,
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            id.toString(),
-                                            style: TextStyle(
-                                                color: ColorConstant.whiteA700),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    /* Flexible(
-                                      flex: 2,
-                                      child: Container(
-                                        height: double.infinity,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadiusDirectional.only(
-                                            topStart: Radius.circular(10),
-                                            bottomStart: Radius.circular(10),
-                                          ),
-                                        ),
-                                        child: Center(
-                                          child: Column(
-                                            children: [
-                                              if (AllStudentList[index].image !=
-                                                  null)
-                                                InkWell(
-                                                  onTap: () {
-                                                    _showZoomableImagereal(
-                                                      context,
-                                                      AllStudentList[index]
-                                                          .image
-                                                          .toString(),
-                                                    );
-                                                  },
-                                                  child: Container(
-                                                    height: 65,
-                                                    child: Image.network(
-                                                      AllStudentList[index]
-                                                          .image
-                                                          .toString(),
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                ),
-                                              if (AllStudentList[index].image ==
-                                                  null)
-                                                InkWell(
-                                                  onTap: () {
-                                                    _showZoomableImage(context,
-                                                        "assets/images/image1.jpg");
-                                                  },
-                                                  child: Container(
-                                                    height: 65,
-                                                    child: Image.asset(
-                                                      "assets/images/image1.jpg",
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                   */
-                                    Flexible(
-                                      flex: 5,
-                                      child: Container(
-                                        width: constraints.maxWidth * 0.5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(5.0),
-                                          child: SingleChildScrollView(
-                                            scrollDirection: Axis.horizontal,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                    'Roll No: ${AllStudentList[index].admnNo}'),
-                                                Text(
-                                                    'Name: ${AllStudentList[index].stu_name ?? ""}'),
-                                                if (AllStudentList[index]
-                                                            .remark2 ==
-                                                        "1" ||
-                                                    AllStudentList[index]
-                                                            .remark2 ==
-                                                        null)
-                                                  Text(
-                                                      'Physically Not Verified',
-                                                      style: TextStyle(
-                                                          fontSize: 14,
-                                                          color: Colors.red)),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Flexible(
-                                      flex: 3,
+                                Flexible(
+                                  flex: 5,
+                                  child: Container(
+                                    width: constraints.maxWidth * 0.5,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5.0),
                                       child: SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
+                                        child: Column(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                          CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                           children: [
-                                            SizedBox(
-                                              width: 65,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    "Present",
-                                                    style: TextStyle(
-                                                        fontSize: 10,
-                                                        color: Colors.green,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  Checkbox(
-                                                    value: AllStudentList[index]
-                                                            .status ==
-                                                        '1',
-                                                    onChanged: (bool? value) {
-                                                      if (value != null &&
-                                                          value) {
-                                                        _updateAttendanceStatus(
-                                                            index, '1');
-                                                      }
-                                                    },
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 65,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    "Absent",
-                                                    style: TextStyle(
-                                                        fontSize: 10,
-                                                        color: Colors.red,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  Checkbox(
-                                                    value: AllStudentList[index]
-                                                            .status ==
-                                                        '0',
-                                                    onChanged: (bool? value) {
-                                                      if (value != null &&
-                                                          value) {
-                                                        _onAbsent(index);
-                                                      }
-                                                    },
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-
-                                            // SizedBox(
-                                            //   width: 65,
-                                            //   child: Column(
-                                            //     mainAxisAlignment:
-                                            //         MainAxisAlignment.center,
-                                            //     children: [
-                                            //       Text("Present",
-                                            //           style: TextStyle(
-                                            //               fontSize: 10,
-                                            //               color: Colors.green,
-                                            //               fontWeight:
-                                            //                   FontWeight.bold)),
-                                            //       Checkbox(
-                                            //         value: AllStudentList[index]
-                                            //                 .status ==
-                                            //             '1',
-                                            //         onChanged: (bool? value) {
-                                            //           if (value != null &&
-                                            //               value) {
-                                            //             _updateAttendanceStatus(
-                                            //                 index, '1');
-                                            //             UpdateStatus(
-                                            //                 AllStudentList[
-                                            //                         index]
-                                            //                     .admnNo,
-                                            //                 AllStudentList[
-                                            //                         index]
-                                            //                     .classPeriods,
-                                            //                 '1',
-                                            //                 "");
-                                            //           }
-                                            //         },
-                                            //       ),
-                                            //     ],
-                                            //   ),
-                                            // ),
-                                            // SizedBox(
-                                            //   width: 65,
-                                            //   child: Column(
-                                            //     mainAxisAlignment:
-                                            //         MainAxisAlignment.center,
-                                            //     children: [
-                                            //       Text("Absent",
-                                            //           style: TextStyle(
-                                            //               fontSize: 10,
-                                            //               color: Colors.red,
-                                            //               fontWeight:
-                                            //                   FontWeight.bold)),
-                                            //       Checkbox(
-                                            //         value: AllStudentList[index]
-                                            //                 .status ==
-                                            //             '0',
-                                            //         onChanged: (bool? value) {
-                                            //           if (value != null &&
-                                            //               value) {
-                                            //             AbsentAlert(
-                                            //               context,
-                                            //               index,
-                                            //               AllStudentList[index]
-                                            //                   .admnNo,
-                                            //               AllStudentList[index]
-                                            //                   .classPeriods,
-                                            //             );
-                                            //           }
-                                            //         },
-                                            //       ),
-                                            //     ],
-                                            //   ),
-                                            // ),
+                                            Text(
+                                                'Roll No: ${AllStudentList[index].admnNo}'),
+                                            Text(
+                                                'Name: ${AllStudentList[index].stu_name ?? ""}'),
+                                            if (AllStudentList[index]
+                                                .remark2 == "1" ||
+                                                AllStudentList[index]
+                                                    .remark2 ==
+                                                    null)
+                                              Text(
+                                                  'Physically Not Verified',
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.red)),
                                           ],
                                         ),
                                       ),
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
+                                Flexible(
+                                  flex: 3,
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.end,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          width: 65,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "Present",
+                                                style: TextStyle(
+                                                    fontSize: 10,
+                                                    color: Colors.green,
+                                                    fontWeight:
+                                                    FontWeight.bold),
+                                              ),
+                                              Checkbox(
+                                                value: AllStudentList[index]
+                                                    .status ==
+                                                    '1',
+                                                onChanged: (bool? value) {
+                                                  if (value != null &&
+                                                      value) {
+                                                    _updateAttendanceStatus(
+                                                        index, '1');
+                                                  }
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 65,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "Absent",
+                                                style: TextStyle(
+                                                    fontSize: 10,
+                                                    color: Colors.red,
+                                                    fontWeight:
+                                                    FontWeight.bold),
+                                              ),
+                                              Checkbox(
+                                                value: AllStudentList[index]
+                                                    .status ==
+                                                    '0',
+                                                onChanged: (bool? value) {
+                                                  if (value != null &&
+                                                      value) {
+                                                    _onAbsent(index);
+                                                  }
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                ),
+                ],
+              ),
+            ),
+          ),
           bottomNavigationBar: BottomAppBar(
             child: Column(
               children: [
                 ischeck
                     ? ElevatedButton(
-                        onPressed: () async {
-                          // if (pagerload == true) {
-                          _AbsentAttendanceUpdate(
-                              AllStudentList.first.classPeriods);
-                          // attendancepostAlrt(context);
-                          // } else {
-                          //   pagereload(context);
-                          // }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: const StadiumBorder(),
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5.0, horizontal: 10.0),
-                          backgroundColor: ColorConstant.ismcolor,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "Submit",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      )
+                  onPressed: () async {
+                    _AbsentAttendanceUpdate(AllStudentList.first.classPeriods);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: const StadiumBorder(),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 5.0, horizontal: 10.0),
+                    backgroundColor: ColorConstant.ismcolor,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Submit",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                )
                     : CircularProgressIndicator(),
               ],
             ),
@@ -1561,515 +1202,6 @@ class _Current_AttendanceScreenState extends State<Current_AttendanceScreen> {
     );
   }
 
-  /* @override
-  Widget build(BuildContext context) {
-    if (AllStudentList.isNotEmpty) {
-      return Scaffold(
-        key: _scaffoldKey,
-        drawer: CustomDrawerProfessor(),
-        appBar: AppBar(
-          // title: Text(
-          //   totalStudent,
-          //   style: TextStyle(color: ColorConstant.whiteA700),
-          // ),
-          title: Row(
-            children: [
-              Expanded(
-                  flex: 1,
-                  child: Text(
-                    totalStudent
-                    // + " (OTP :" + otp + ")"
-                    ,
-                    style: TextStyle(color: ColorConstant.whiteA700),
-                  )),
-              Expanded(
-                flex: 1,
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 8,
-                      child: TextField(
-                        onChanged: (value) {
-                          setState(() {
-                            _search = value;
-                          });
-                        },
-                        cursorColor: ColorConstant.whiteA700,
-                        keyboardType: TextInputType.text,
-                        textInputAction: TextInputAction.go,
-                        decoration: InputDecoration(
-                          focusColor: ColorConstant.whiteA700,
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                          hintText: "Search",
-                          hintStyle: TextStyle(color: ColorConstant.whiteA700),
-                          fillColor: ColorConstant.whiteA700,
-                          // filled: true,
-                          iconColor: ColorConstant.whiteA700,
-                          hoverColor: ColorConstant.whiteA700,
-                        ),
-                        style: TextStyle(color: ColorConstant.whiteA700),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 5,
-                      child: InkWell(
-                        onTap: () async {
-                          setState(() {
-                            AllStudentList = <StudentAttendance>[];
-                          });
-                          _LoadAssignClass(_search.toString());
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            color: ColorConstant.ismcolor,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          child: Icon(
-                            Icons.search,
-                            size: 30,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-          leading: InkWell(
-            onTap: () {
-              _scaffoldKey.currentState?.openDrawer();
-            },
-            child: Icon(Icons.menu, color: ColorConstant.whiteA700),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 12.0),
-              child: InkWell(
-                onTap: () {
-                  _LoadAssignClass('');
-                  setState(() {
-                    pagerload = true;
-                  });
-                },
-                child: Icon(
-                  Icons.replay,
-                  color: ColorConstant.whiteA700,
-                  size: 30,
-                ),
-              ),
-            ),
-          ],
-          // actions: [
-          //   Container(   width: 200,
-          //     padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-
-          //     child: TextField(
-          //             onChanged: (value) async {
-          //               setState(() {
-          //                 _search = value;
-          //                 AllStudentList = <AllStudentAttendanceList>[];
-          //               });
-          //               // getpop(context);
-          //               _LoadAssignClass(_search.toString());
-          //             },
-          //             cursorColor: ColorConstant.whiteA700,
-          //             keyboardType: TextInputType.text,
-          //             textInputAction: TextInputAction.go,
-          //             decoration: InputDecoration(
-          //                 focusColor: ColorConstant.whiteA700,
-          //                 border: InputBorder.none,
-          //                 contentPadding: EdgeInsets.symmetric(horizontal: 15),
-          //                 hintText: "Search",
-          //                 // suffixIcon: Icon(Icons.search),
-          //                 hoverColor: ColorConstant.whiteA700),
-          //           ),
-          //   ),
-          // ],
-          backgroundColor: ColorConstant.ismcolor,
-        ),
-        body: isLoading
-            ? Center(child: CircularProgressIndicator())
-            : Container(
-                width: double.infinity,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 8.0, right: 8.0, bottom: 8.0, top: 8.0),
-                      child: Container(
-                        height: 30,
-                        decoration: BoxDecoration(
-                            border: Border.all(),
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.only(left: 10.0, right: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Center(
-                                  child: Text(
-                                "Present : " + presentStudent.toString(),
-                                style: TextStyle(fontSize: 18),
-                              )),
-                              Center(
-                                  child: Text(
-                                "Absent : " + absentStudent.toString(),
-                                style: TextStyle(fontSize: 18),
-                              ))
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 8.0, right: 8.0, bottom: 8.0, top: 8.0),
-                      child: Container(
-                        height: 30,
-                        decoration: BoxDecoration(
-                            border: Border.all(),
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Center(
-                                  child: Text(
-                                "Attendance OTP : " + otp,
-                                style: TextStyle(fontSize: 18),
-                              )),
-                              Center(
-                                  child: ElevatedButton(
-                                onPressed: () {
-                                  AttendanceTimeExtand(context);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: ColorConstant.ismcolor,
-                                  // elevation: 3,
-                                ),
-                                child: Text(
-                                  'Time Extend',
-                                  style:
-                                      TextStyle(color: ColorConstant.whiteA700),
-                                ),
-                              ))
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: AllStudentList.length,
-                        itemBuilder: (context, index) {
-                          int id = index + 1; // Generates an ID starting from 1
-                          String length = AllStudentList[index].toString();
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                                left: 5.0, right: 5.0, bottom: 5, top: 5),
-                            child: Container(
-                              height: 70,
-                              decoration: BoxDecoration(
-                                // border: Border.all(width: ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Flexible(
-                                    flex: 2,
-                                    child: Container(
-                                      height: double.infinity,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadiusDirectional.only(
-                                          topStart: Radius.circular(10),
-                                          bottomStart: Radius.circular(10),
-                                        ),
-                                        // color: ColorConstant.ismcolor,
-                                      ),
-                                      child: Center(
-                                        child: Column(
-                                          children: [
-                                            if (AllStudentList[index].image !=
-                                                null)
-                                              InkWell(
-                                                onTap: () {
-                                                  _showZoomableImagereal(
-                                                    context,
-                                                    AllStudentList[index]
-                                                        .image
-                                                        .toString(),
-                                                  );
-                                                },
-                                                child: Container(
-                                                  height: 65,
-                                                  child: Image.network(
-                                                    AllStudentList[index]
-                                                        .image
-                                                        .toString(),
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              ),
-                                            if (AllStudentList[index].image ==
-                                                null)
-                                              InkWell(
-                                                onTap: () {
-                                                  _showZoomableImage(context,
-                                                      "assets/images/image1.jpg");
-                                                },
-                                                child: Container(
-                                                  height: 65,
-                                                  // width: 50,
-                                                  child: Image.asset(
-                                                    "assets/images/image1.jpg",
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Flexible(
-                                    flex: 5,
-                                    child: Container(
-                                      width: 250,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                  'Roll No: ${AllStudentList[index].admnNo}'),
-                                              if (AllStudentList[index]
-                                                          .remark2 ==
-                                                      "1" ||
-                                                  AllStudentList[index]
-                                                          .remark2 ==
-                                                      null)
-                                                Text('Physically Not Verified',
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: ColorConstant
-                                                            .accentColor)),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Flexible(
-                                    flex: 3,
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            width: 65,
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text("Present",
-                                                    style: TextStyle(
-                                                        fontSize: 10,
-                                                        color: ColorConstant
-                                                            .green900,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                                Checkbox(
-                                                  value: AllStudentList[index]
-                                                          .status ==
-                                                      '1',
-                                                  onChanged: (bool? value) {
-                                                    if (value != null &&
-                                                        value) {
-                                                      _updateAttendanceStatus(
-                                                          index, '1');
-                                                      UpdateStatus(
-                                                          AllStudentList[index]
-                                                              .admnNo,
-                                                          AllStudentList[index]
-                                                              .classPeriods,
-                                                          '1',
-                                                          "");
-                                                    }
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 65,
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text("Absent",
-                                                    style: TextStyle(
-                                                        fontSize: 10,
-                                                        color: ColorConstant
-                                                            .redA701,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                                SizedBox(
-                                                  child: Checkbox(
-                                                    value: AllStudentList[index]
-                                                            .status ==
-                                                        '0',
-                                                    onChanged: (bool? value) {
-                                                      if (value != null &&
-                                                          value) {
-                                                        AbsentAlert(
-                                                          context,
-                                                          index,
-                                                          AllStudentList[index]
-                                                              .admnNo,
-                                                          AllStudentList[index]
-                                                              .classPeriods,
-                                                        );
-                                                      }
-                                                    },
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          // SizedBox(
-                                          //   width: 65,
-                                          //   child: Column(
-                                          //     mainAxisAlignment: MainAxisAlignment.center,
-                                          //     children: [
-                                          //       Text("Leave", style: TextStyle(fontSize: 10, color: ColorConstant.black900, fontWeight: FontWeight.bold)),
-                                          //       Checkbox(
-                                          //         value: _filteredStudents[index]['status'] == 'Leave',
-                                          //         onChanged: (bool? value) {
-                                          //           if (value != null && value) {
-                                          //             _updateAttendanceStatus(index, 'Leave');
-                                          //           }
-                                          //         },
-                                          //       ),
-                                          //     ],
-                                          //   ),
-                                          // ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-        bottomNavigationBar: BottomAppBar(
-          child: Padding(
-            padding: const EdgeInsets.only(
-                left: 24.0, right: 24.0, top: 0.0, bottom: 0.0),
-            child: Column(
-              children: [
-                ischeck
-                    ? ElevatedButton(
-                        onPressed: () async {
-                          if (pagerload == true) {
-                            // await _Post_Attendance_Student_update();
-                            _AbsentAttendanceUpdate(
-                                AllStudentList.first.classPeriods);
-                            attendancepostAlrt(context);
-                          } else {
-                            pagereload(context);
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: const StadiumBorder(),
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5.0, horizontal: 10.0),
-                          backgroundColor: ColorConstant.ismcolor,
-                        ),
-                        child: Text(
-                          "Submit",
-                          style: TextStyle(fontSize: 20.0, color: Colors.white),
-                        ),
-                      )
-                    : SpinKitWave(
-                        color: ColorConstant.ismcolor,
-                        size: 50.0,
-                        type: SpinKitWaveType.center,
-                      ),
-              ],
-            ),
-          ),
-        ),
-      );
-    } else if (AllStudentList.isEmpty && dealy == true) {
-      return Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          title: Text(
-            "List Of Student",
-            style: TextStyle(color: ColorConstant.whiteA700),
-          ),
-          leading: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(Icons.arrow_back_ios, color: ColorConstant.whiteA700),
-          ),
-          backgroundColor: ColorConstant.ismcolor,
-        ),
-        body: Center(
-          child: Text(
-            "Currently No Attendance List Found",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-        ),
-      );
-    } else {
-      return Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          title: Text(
-            "List Of Student",
-            style: TextStyle(color: ColorConstant.whiteA700),
-          ),
-          leading: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(Icons.arrow_back_ios, color: ColorConstant.whiteA700),
-          ),
-          backgroundColor: ColorConstant.ismcolor,
-        ),
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
-    }
-  }
-*/
   void _showZoomableImage(BuildContext context, String image) {
     showDialog(
       context: context,
@@ -2130,18 +1262,7 @@ class _Current_AttendanceScreenState extends State<Current_AttendanceScreen> {
                       return null;
                     },
                   ),
-                  // TextFormField(
-                  //   controller: _textControllerremark,
-                  //   decoration: InputDecoration(
-                  //     labelText: 'Enter Remark',
-                  //   ),
-                  //   validator: (value) {
-                  //     if (value == null || value.isEmpty) {
-                  //       return 'This field is required';
-                  //     }
-                  //     return null;
-                  //   },
-                  // ),
+
                   SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
@@ -2366,81 +1487,6 @@ class _Current_AttendanceScreenState extends State<Current_AttendanceScreen> {
       },
     );
   }
-
-  //make time extand
-  /* void AttendanceTimeExtand(BuildContext context) {
-    final TextEditingController _classextand = TextEditingController();
-    int counter = 0;
-
-    void _incrementCounter() {
-      setState(() {
-        counter++;
-      });
-    }
-
-    void _decrementCounter() {
-      setState(() {
-        if (counter > 0) counter--;
-      });
-    }
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Last Time'),
-          content: Column(
-            children: [
-              TextField(
-                controller: _classextand,
-                decoration: InputDecoration(
-                    hintText: 'Enter New Time', suffix: Text('Min')),
-                onChanged: _onTextChanged,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.remove),
-                    onPressed: () {
-                      setState(_decrementCounter);
-                    },
-                  ),
-                  Text(
-                    '$counter',
-                    style: TextStyle(fontSize: 20.0),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.add),
-                    onPressed: () {
-                      setState(_incrementCounter);
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                updadateclasstimme(classotpvalied.toString());
-                print('Text: ${_classextand.text}');
-                Navigator.of(context).pop();
-              },
-              child: Text('Submit'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-*/
 }
 
 void pagereload(BuildContext context) {
@@ -2521,12 +1567,7 @@ void attendancepostAlrt(BuildContext context) {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     Navigator.of(context).pop();
-                  //   },
-                  //   child: Text('Close'),
-                  // ),
+
                   ElevatedButton(
                     onPressed: () async {
                       Navigator.pushAndRemoveUntil(
@@ -2534,16 +1575,7 @@ void attendancepostAlrt(BuildContext context) {
                         MaterialPageRoute(builder: (context) => Dashboard()),
                         (Route<dynamic> route) => true,
                       );
-                      // Fluttertoast.showToast(
-                      //   msg: "Data Submitted Successfully",
-                      //   toastLength: Toast.LENGTH_SHORT,
-                      //   gravity: ToastGravity.BOTTOM,
-                      //   timeInSecForIosWeb: 1,
-                      //   backgroundColor: Colors.black,
-                      //   textColor: Colors.white,
-                      //   fontSize: 16.0,
-                      // );
-                      // Navigator.of(context).pop();
+
                     },
                     child: Text('OK'),
                   ),

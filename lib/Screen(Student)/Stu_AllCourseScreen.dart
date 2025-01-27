@@ -517,7 +517,7 @@ class _Stu_All_CourseScreenState extends State<Stu_All_CourseScreen> {
         ),
         body: Center(
           child: Text(
-            "Curently No Class Live",
+            "Currently No Class Live",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),

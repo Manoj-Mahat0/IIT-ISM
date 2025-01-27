@@ -849,116 +849,6 @@ class _Current_AttendanceScreen_TAState
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
-                //     Expanded(
-                //         flex: 1,
-                //         // ignore: sort_child_properties_last
-                //         child: Row(children: [
-                //           Expanded(
-                //             flex: 8,
-                //             child: TextField(
-                //               controller: _searchController,
-                //               onChanged: (value) {
-                //                 setState(() {
-                //                   _search = value;
-                //                 });
-                //               },
-                //               cursorColor: Colors.white,
-                //               keyboardType: TextInputType.text,
-                //               textInputAction: TextInputAction.go,
-                //               decoration: InputDecoration(
-                //                 focusColor: Colors.white,
-                //                 border: InputBorder.none,
-                //                 contentPadding:
-                //                     EdgeInsets.symmetric(horizontal: 15),
-                //                 hintText: "Search",
-                //                 hintStyle: TextStyle(color: Colors.white),
-                //                 fillColor: Colors.white,
-                //                 iconColor: Colors.white,
-                //                 hoverColor: Colors.white,
-                //               ),
-                //               style: TextStyle(color: Colors.white),
-                //             ),
-                //           ),
-                //           Expanded(
-                //             flex: 5,
-                //             child: InkWell(
-                //               onTap: () async {
-                //                 setState(() {
-                //                   AbsentStudentList = <StudentAttendance>[];
-                //                 });
-                //                 _LoadAssignClass(_search.toString());
-                //               },
-                //               child: Container(
-                //                 padding: EdgeInsets.all(10.0),
-                //                 decoration: BoxDecoration(
-                //                   color: ColorConstant.ismcolor,
-                //                   borderRadius: BorderRadius.circular(5.0),
-                //                 ),
-                //                 child: Icon(
-                //                   Icons.search,
-                //                   size: 30,
-                //                   color: Colors.white,
-                //                 ),
-                //               ),
-                //             ),
-                //           )
-                //           /*   Expanded(
-                //       flex: 1,
-                //       child: Row(
-                //         children: [
-                //           Expanded(
-                //             flex: 8,
-                //             child: TextField(
-                //               onChanged: (value) {
-                //                 setState(() {
-                //                   _search = value;
-                //                 });
-                //               },
-                //               cursorColor: Colors.white,
-                //               keyboardType: TextInputType.text,
-                //               textInputAction: TextInputAction.go,
-                //               decoration: InputDecoration(
-                //                 focusColor: Colors.white,
-                //                 border: InputBorder.none,
-                //                 contentPadding:
-                //                     EdgeInsets.symmetric(horizontal: 15),
-                //                 hintText: "Search",
-                //                 hintStyle: TextStyle(color: Colors.white),
-                //                 fillColor: Colors.white,
-                //                 iconColor: Colors.white,
-                //                 hoverColor: Colors.white,
-                //               ),
-                //               style: TextStyle(color: Colors.white),
-                //             ),
-                //           ),
-                //           Expanded(
-                //             flex: 5,
-                //             child: InkWell(
-                //               onTap: () async {
-                //                 setState(() {
-                //                   AllStudentList = <StudentAttendance>[];
-                //                 });
-                //                 _LoadAssignClass(_search.toString());
-                //               },
-                //               child: Container(
-                //                 padding: EdgeInsets.all(10.0),
-                //                 decoration: BoxDecoration(
-                //                   color: ColorConstant.ismcolor,
-                //                   borderRadius: BorderRadius.circular(5.0),
-                //                 ),
-                //                 child: Icon(
-                //                   Icons.search,
-                //                   size: 30,
-                //                   color: Colors.white,
-                //                 ),
-                //               ),
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     )
-                //  */
-                //         ]))
               ],
             ),
             leading: InkWell(
@@ -1014,79 +904,6 @@ class _Current_AttendanceScreen_TAState
                   width: double.infinity,
                   child: Column(
                     children: [
-                      //button tab
-                      // Padding(
-                      //   padding: const EdgeInsets.only(left: 8.0, right: 8),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       ElevatedButton(
-                      //         onPressed: () {
-                      //           _LoadAssignClass(_search);
-                      //           setState(() {
-                      //             _currentIndex = 0;
-                      //           });
-                      //         },
-                      //         style: ElevatedButton.styleFrom(
-                      //           backgroundColor: _currentIndex == 0
-                      //               ? ColorConstant.ismcolor
-                      //               : Colors.grey,
-                      //         ),
-                      //         child: Text(
-                      //           'All',
-                      //           style: TextStyle(
-                      //             color: _currentIndex == 0
-                      //                 ? Colors.white
-                      //                 : Colors.black,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       ElevatedButton(
-                      //         onPressed: () {
-                      //           PresentStudent(_search);
-                      //           setState(() {
-                      //             _currentIndex = 1;
-                      //           });
-                      //         },
-                      //         style: ElevatedButton.styleFrom(
-                      //           backgroundColor: _currentIndex == 1
-                      //               ? ColorConstant.ismcolor
-                      //               : Colors.grey,
-                      //         ),
-                      //         child: Text(
-                      //           'Present',
-                      //           style: TextStyle(
-                      //             color: _currentIndex == 1
-                      //                 ? Colors.white
-                      //                 : Colors.black,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       ElevatedButton(
-                      //         onPressed: () {
-                      //           setState(() {
-                      //             AbsentStudent(_search);
-                      //             _currentIndex = 2;
-                      //           });
-                      //         },
-                      //         style: ElevatedButton.styleFrom(
-                      //           backgroundColor: _currentIndex == 2
-                      //               ? ColorConstant.ismcolor
-                      //               : Colors.grey,
-                      //         ),
-                      //         child: Text(
-                      //           'Absent',
-                      //           style: TextStyle(
-                      //             color: _currentIndex == 2
-                      //                 ? Colors.white
-                      //                 : Colors.black,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
@@ -1298,76 +1115,6 @@ class _Current_AttendanceScreen_TAState
                                                 ],
                                               ),
                                             ),
-
-                                            // SizedBox(
-                                            //   width: 65,
-                                            //   child: Column(
-                                            //     mainAxisAlignment:
-                                            //         MainAxisAlignment.center,
-                                            //     children: [
-                                            //       Text("Present",
-                                            //           style: TextStyle(
-                                            //               fontSize: 10,
-                                            //               color: Colors.green,
-                                            //               fontWeight:
-                                            //                   FontWeight.bold)),
-                                            //       Checkbox(
-                                            //         value: AllStudentList[index]
-                                            //                 .status ==
-                                            //             '1',
-                                            //         onChanged: (bool? value) {
-                                            //           if (value != null &&
-                                            //               value) {
-                                            //             _updateAttendanceStatus(
-                                            //                 index, '1');
-                                            //             UpdateStatus(
-                                            //                 AllStudentList[
-                                            //                         index]
-                                            //                     .admnNo,
-                                            //                 AllStudentList[
-                                            //                         index]
-                                            //                     .classPeriods,
-                                            //                 '1',
-                                            //                 "");
-                                            //           }
-                                            //         },
-                                            //       ),
-                                            //     ],
-                                            //   ),
-                                            // ),
-                                            // SizedBox(
-                                            //   width: 65,
-                                            //   child: Column(
-                                            //     mainAxisAlignment:
-                                            //         MainAxisAlignment.center,
-                                            //     children: [
-                                            //       Text("Absent",
-                                            //           style: TextStyle(
-                                            //               fontSize: 10,
-                                            //               color: Colors.red,
-                                            //               fontWeight:
-                                            //                   FontWeight.bold)),
-                                            //       Checkbox(
-                                            //         value: AllStudentList[index]
-                                            //                 .status ==
-                                            //             '0',
-                                            //         onChanged: (bool? value) {
-                                            //           if (value != null &&
-                                            //               value) {
-                                            //             AbsentAlert(
-                                            //               context,
-                                            //               index,
-                                            //               AllStudentList[index]
-                                            //                   .admnNo,
-                                            //               AllStudentList[index]
-                                            //                   .classPeriods,
-                                            //             );
-                                            //           }
-                                            //         },
-                                            //       ),
-                                            //     ],
-                                            //   ),
-                                            // ),
                                           ],
                                         ),
                                       ),
@@ -1391,10 +1138,6 @@ class _Current_AttendanceScreen_TAState
                           // if (pagerload == true) {
                           _AbsentAttendanceUpdate(
                               AllStudentList.first.classPeriods);
-                          // attendancepostAlrt(context);
-                          // } else {
-                          //   pagereload(context);
-                          // }
                         },
                         style: ElevatedButton.styleFrom(
                           shape: const StadiumBorder(),
@@ -1476,18 +1219,6 @@ class _Current_AttendanceScreen_TAState
                       return null;
                     },
                   ),
-                  // TextFormField(
-                  //   controller: _textControllerremark,
-                  //   decoration: InputDecoration(
-                  //     labelText: 'Enter Remark',
-                  //   ),
-                  //   validator: (value) {
-                  //     if (value == null || value.isEmpty) {
-                  //       return 'This field is required';
-                  //     }
-                  //     return null;
-                  //   },
-                  // ),
                   SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
@@ -1719,81 +1450,6 @@ class _Current_AttendanceScreen_TAState
       },
     );
   }
-
-  //make time extand
-  /* void AttendanceTimeExtand(BuildContext context) {
-    final TextEditingController _classextand = TextEditingController();
-    int counter = 0;
-
-    void _incrementCounter() {
-      setState(() {
-        counter++;
-      });
-    }
-
-    void _decrementCounter() {
-      setState(() {
-        if (counter > 0) counter--;
-      });
-    }
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Last Time'),
-          content: Column(
-            children: [
-              TextField(
-                controller: _classextand,
-                decoration: InputDecoration(
-                    hintText: 'Enter New Time', suffix: Text('Min')),
-                onChanged: _onTextChanged,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.remove),
-                    onPressed: () {
-                      setState(_decrementCounter);
-                    },
-                  ),
-                  Text(
-                    '$counter',
-                    style: TextStyle(fontSize: 20.0),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.add),
-                    onPressed: () {
-                      setState(_incrementCounter);
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                updadateclasstimme(classotpvalied.toString());
-                print('Text: ${_classextand.text}');
-                Navigator.of(context).pop();
-              },
-              child: Text('Submit'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-*/
 }
 
 void pagereload(BuildContext context) {
@@ -1887,16 +1543,6 @@ void attendancepostAlrt(BuildContext context) {
                         MaterialPageRoute(builder: (context) => Dashboard()),
                         (Route<dynamic> route) => true,
                       );
-                      // Fluttertoast.showToast(
-                      //   msg: "Data Submitted Successfully",
-                      //   toastLength: Toast.LENGTH_SHORT,
-                      //   gravity: ToastGravity.BOTTOM,
-                      //   timeInSecForIosWeb: 1,
-                      //   backgroundColor: Colors.black,
-                      //   textColor: Colors.white,
-                      //   fontSize: 16.0,
-                      // );
-                      // Navigator.of(context).pop();
                     },
                     child: Text('OK'),
                   ),

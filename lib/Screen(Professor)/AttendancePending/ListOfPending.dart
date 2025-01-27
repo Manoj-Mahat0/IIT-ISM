@@ -654,7 +654,7 @@ class _DatewisePendingScreenState extends State<DatewisePendingScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "No Class Pendinng",
+                "No Class Pending",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               // ElevatedButton(
